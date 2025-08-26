@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Grammar Trainer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 24px;
+        background: #f5f5f5;
+      }
+      .card {
+        border: 1px solid #ddd;
+        background: white;
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      }
+      button {
+        background: #2e7d32;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1b5e20;
+      }
+      .content-section {
+        white-space: pre-wrap;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+      }
+      .score-summary-box {
+        border: 2px solid #2e7d32;
+        background: #e8f5e9;
+        padding: 20px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Grammar Trainer</h1>
+
+    <div id="startScreen" class="card">
+      <label for="exercise">Select an exercise:</label>
+      <select id="exercise">
+        <option value="Inferences">Inferences</option>
+        <option value="Textual Evidence">Textual Evidence</option>
+        <option value="Word in Context">Word in Context</option>
+      </select>
+      <button id="startBtn">Start Exercise</button>
+    </div>
+
+    <div id="quizScreen" class="card" style="display:none;">
+      <h2 id="quizTitle"></h2>
+      <div id="introContent" class="content-section"></div>
+      <button id="startQuizBtn" style="display:none;">Take a Quiz</button>
+      
+      <div id="questionArea" style="display:none;">
+        <p id="questionText"></p>
+        <div id="options"></div>
+        <p><button id="hintBtn">Show Hint</button></p>
+        <p id="hint" style="display:none; color: #555;"></p>
+        <p><button id="nextBtn" style="display:none;">Next</button></p>
+      </div>
+
+      <div id="scorePage" style="display:none;" class="score-summary-box">
+        <h3>Quiz Complete!</h3>
+        <p id="finalScoreText"></p>
+        <p id="summaryText"></p>
+        <div id="studyContent"></div>
+        <button id="continueBtn">Continue</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
