@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import fetch from "node-fetch";
+import path from "path";
+import { fileURLToPath } from "url";
 import { appendUserScore } from "./googleSheets.js";
 
 dotenv.config();
@@ -17,15 +19,22 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 const API_KEY = process.env.GEMINI_API_KEY;
 
+// ========= STATIC FRONTEND SETUP =========
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve index.html, script.js, etc. from project root
+app.use(express.static(__dirname));
+
+// =========================================
+
 // Function to generate quiz questions using Gemini
 async function askGemini(topic, isSATLevel, wrongTopics = [], introContent = "") {
   const questionCount = 10;
 
-  // Instruction to strictly use intro content
   const contentNote = `Use ONLY the following content from the intro page as reference:\n${introContent}\n`;
 
   let prompt;
-
   if (isSATLevel) {
     prompt = `
 ${contentNote}
@@ -116,14 +125,12 @@ Return ONLY the JSON array.
     const data = await res.json();
     let text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
-    // Extract JSON array safely
     let jsonString = "";
     const arrayStart = text.indexOf("[");
     const arrayEnd = text.lastIndexOf("]");
     if (arrayStart !== -1 && arrayEnd !== -1 && arrayEnd > arrayStart) {
       jsonString = text.substring(arrayStart, arrayEnd + 1);
     } else {
-      // Remove fenced code blocks if any
       jsonString = text.replace(/```(?:json)?/g, "").trim();
       const regexMatch = jsonString.match(/\[[\s\S]*\]/);
       jsonString = regexMatch ? regexMatch[0] : "";
@@ -141,8 +148,9 @@ Return ONLY the JSON array.
 }
 
 // ===================== API ENDPOINTS =====================
+// (your existing endpoints remain unchanged below)
 
-// Endpoint for AI study guide and examples
+// Example endpoint already in your file
 app.post("/ai-study-material", async (req, res) => {
   const { topic } = req.body;
 
@@ -221,8 +229,10 @@ app.post("/log-score", async (req, res) => {
   }
 });
 
+// (other endpoints from your file)
 
 // ===================== START SERVER =====================
 app.listen(PORT, () => {
-  console.log(`✅ API listening on http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Open http://localhost:${PORT} to view the app`);
 });
