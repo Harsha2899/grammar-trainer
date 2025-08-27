@@ -608,7 +608,7 @@ Błędne odpowiedzi są jak zawodnik, który udaje, że podaje, żebyś poruszy�
 
 async function logUserQuiz(email, topic, score, hintUsed, qaLog) {
   try {
-    const response = await fetch("http://localhost:5000/log-score", {
+    const response = await fetch("http://165.232.176.123/log-score", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, topic, score, hintUsed, qaLog }),
@@ -624,7 +624,7 @@ async function logUserQuiz(email, topic, score, hintUsed, qaLog) {
 // This is the function to log a single question at a time.
 async function logQuestion(email, topic, questionEntry) {
   try {
-    const response = await fetch("http://localhost:5000/log-score", {
+    const response = await fetch("http://165.232.176.123/log-score", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -645,7 +645,7 @@ async function logQuestion(email, topic, questionEntry) {
 
 async function fetchStudyMaterial(topic) {
   try {
-    const response = await fetch("http://localhost:5000/ai-study-material", {
+    const response = await fetch("http://165.232.176.123/ai-study-material", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic }),
@@ -699,7 +699,7 @@ async function loadQuiz(topic, isRemedial = false) {
       isSATLevel: isSATLevel,
       wrongTopics: isRemedial ? Array.from(wrongTopics) : [],
     };
-    const res = await fetch("http://localhost:5000/generate-quiz", {
+    const res = await fetch("http://165.232.176.123/generate-quiz", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
