@@ -1,5 +1,6 @@
 const startBtn = document.getElementById("startBtn");
 const exerciseSelect = document.getElementById("exercise");
+const backToSectionsBtn = document.getElementById("backToSectionsBtn");
 const startScreen = document.getElementById("startScreen");
 const quizScreen = document.getElementById("quizScreen");
 const introContentDiv = document.getElementById("introContent");
@@ -401,114 +402,207 @@ Błędne odpowiedzi są jak zawodnik, który udaje, że podaje, żebyś poruszy�
 </body>
 </html>`,
   "Word in Context": `<!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAT Words-in-Context: The Playbook</title>
-<style>
-body {
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-line-height: 1.6;
-color: #333;
-max-width: 900px;
-margin: 0 auto;
-padding: 20px;
-background-color: #f4f4f9;
-}
-.container {
-background: #fff;
-padding: 30px;
-border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-h1 {
-color: #1a1a1a;
-text-align: center;
-font-size: 2.5em;
-margin-bottom: 0.5em;
-}
-h2 {
-color: #4a4a4a;
-border-bottom: 2px solid #e0e0e0;
-padding-bottom: 5px;
-margin-top: 2em;
-font-size: 1.8em;
-}
-h3 {
-color: #5a5a5a;
-margin-top: 1.5em;
-}
-p {
-margin-bottom: 1em;
-font-size: 1.1em;
-}
-.polish-text {
-color: #666;
-font-style: italic;
-margin-top: -1em;
-margin-bottom: 1em;
-padding-left: 20px;
-border-left: 3px solid #ddd;
-}
-.example-box {
-border: 2px solid #4CAF50;
-border-left: 5px solid #4CAF50;
-padding: 20px;
-margin: 20px 0;
-background-color: #e8f5e9;
-border-radius: 8px;
-}
-.tip-box {
-border: 2px solid #2196F3;
-border-left: 5px solid #2196F3;
-padding: 15px;
-margin: 15px 0;
-background-color: #e3f2fd;
-border-radius: 8px;
-}
-.warning-box {
-border: 2px solid #f44336;
-border-left: 5px solid #f44336;
-padding: 15px;
-margin: 15px 0;
-background-color: #ffebee;
-border-radius: 8px;
-}
-.code-block {
-background-color: #f8f8f8;
-border: 1px solid #ddd;
-padding: 15px;
-border-radius: 8px;
-margin-top: 1em;
-}
-ul, ol {
-padding-left: 25px;
-margin-bottom: 1em;
-}
-li {
-margin-bottom: 0.5em;
-}
-hr {
-border: none;
-height: 1px;
-background-color: #e0e0e0;
-margin: 40px 0;
-}
-.highlight {
-background-color: #ffeb3b;
-padding: 2px 5px;
-border-radius: 4px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Words-in-Context</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+        }
+        .bilingual-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .lang-column {
+            flex: 1;
+            padding: 10px;
+            background: #e9e9e9;
+            border-radius: 5px;
+        }
+        .lang-column h3 {
+            margin-top: 0;
+            border: none;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f0f8ff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 5px solid #007bff;
+            border-radius: 3px;
+        }
+        strong {
+            color: #d35400;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-<h1>Words-in-Context: Reading the Game, Word by Word 🏀</h1>
-<p>English: These questions are a major part of the SAT Reading section. You'll see them at the beginning of each module. They ask you to choose a word that fits best in a sentence. The key is to look at the context—the words and ideas around the blank—to figure out the correct meaning. Just because a word has one meaning you know doesn't mean it works in every sentence. For example, "dribble" can mean to move a basketball, but it also means a small amount of liquid. The context tells you which one is correct.</p>
-<p class="polish-text">Polish: Te pytania stanowią główną część sekcji czytania na SAT. Pojawiają się na początku każdego modułu. Proszą Cię o wybranie słowa, które najlepiej pasuje do zdania. Kluczem jest spojrzenie na kontekst — słowa i pomysły wokół luki — aby ustalić właściwe znaczenie. To, że znasz jedno znaczenie słowa, nie oznacza, że będzie ono pasować do każdego zdania. Na przykład, "dribble" może oznaczać prowadzenie piłki w koszykówce, ale także małą ilość płynu. Kontekst powie Ci, które znaczenie jest właściwe.</p>
+    <h1>An American Coach's Playbook for the SAT</h1>
+
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>What Are Words-in-Context Questions? (English)</h3>
+            <p>These questions are a major part of the SAT Reading section. You'll see them at the beginning of each module. They ask you to choose a word that fits best in a sentence. The key is to look at the <strong>context</strong>—the words and ideas around the blank—to figure out the correct meaning. Just because a word has one meaning you know doesn't mean it works in every sentence. For example, "dribble" can mean to move a basketball, but it also means a small amount of liquid. The context tells you which one is correct.</p>
+        </div>
+        <div class="lang-column">
+            <h3>Czym są pytania "Words-in-Context"? (Polish)</h3>
+            <p>Te pytania stanowią główną część sekcji czytania na SAT. Pojawiają się na początku każdego modułu. Proszą Cię o wybranie słowa, które najlepiej pasuje do zdania. Kluczem jest spojrzenie na <strong>kontekst</strong> — słowa i pomysły wokół luki — aby ustalić właściwe znaczenie. To, że znasz jedno znaczenie słowa, nie oznacza, że będzie ono pasować do każdego zdania. Na przykład, "dribble" może oznaczać prowadzenie piłki w koszykówce, ale także małą ilość płynu. Kontekst powie Ci, które znaczenie jest właściwe.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>The Game Plan: Two Types of Questions</h2>
+
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>1. Fill-in-the-Blank Questions 📝 (English)</h3>
+            <p>These questions ask you to complete a sentence. The question is always the same: "Which choice completes the text with the most logical and precise word or phrase?"</p>
+            <h4>Here's the strategy, step-by-step:</h4>
+            <ul>
+                <li>Read the whole sentence, not just the words around the blank.</li>
+                <li>Look for clues. What are the other words in the sentence telling you? Do they suggest a positive or a negative idea?</li>
+                <li>Predict an answer. Before you look at the choices, try to think of a word that could fit. This helps you avoid getting tricked by the wrong answers.</li>
+                <li>Eliminate the wrong choices. Plug each answer choice into the sentence and see if it makes sense. The correct answer will be the one that fits perfectly.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p><strong>The sentence:</strong> "The painting... does not fully <strong>_______</strong> the artist's signature style."</p>
+            <p><strong>Clues:</strong> The text mentions "skeptics' views" and that the painting has "uncharacteristically crude technique." This tells us the painting doesn't match Vermeer's style.</p>
+            <p><strong>Prediction:</strong> A word like "match," "show," or "represent."</p>
+            <p><strong>Checking choices:</strong></p>
+            <ul>
+                <li>A) consider: This doesn't make sense. Paintings can't "consider" a style.</li>
+                <li>B) express: This fits. The painting doesn't fully "express" the style. It's a possible answer.</li>
+                <li>C) disprove: The painting doesn't "disprove" the style itself; it just doesn't show it perfectly.</li>
+                <li>D) confirm: This is the opposite of what the clues suggest.</li>
+            </ul>
+            <p><strong>Final Answer: B</strong> is the best choice.</p>
+        </div>
+        <div class="lang-column">
+            <h3>1. Pytania "Fill-in-the-Blank" 📝 (Polish)</h3>
+            <p>Te pytania proszą Cię o uzupełnienie zdania. Pytanie jest zawsze takie samo: „Która opcja uzupełnia tekst najbardziej logicznym i precyzyjnym słowem lub wyrażeniem?”.</p>
+            <h4>Oto strategia, krok po kroku:</h4>
+            <ul>
+                <li>Przeczytaj całe zdanie, a nie tylko słowa wokół luki.</li>
+                <li>Szukaj wskazówek. Co mówią Ci inne słowa w zdaniu? Czy sugerują pozytywną czy negatywną ideę?</li>
+                <li>Przewidź odpowiedź. Zanim spojrzysz na opcje, spróbuj wymyślić słowo, które mogłoby pasować. To pomoże Ci uniknąć pułapek.</li>
+                <li>Eliminuj błędne opcje. Wstaw każdą opcję do zdania i sprawdź, czy ma sens. Poprawna odpowiedź będzie tą, która pasuje idealnie.</li>
+            </ul>
+            <h4>Przykład:</h4>
+            <p><strong>Zdanie:</strong> "Obraz... nie w pełni <strong>_______</strong> charakterystyczny styl artysty."</p>
+            <p><strong>Wskazówki:</strong> Tekst wspomina o „poglądach sceptyków” oraz o tym, że obraz ma „nietypowo surową technikę”. To mówi nam, że obraz nie pasuje do stylu Vermeera.</p>
+            <p><strong>Przewidywanie:</strong> Słowo takie jak "pasuje", "pokazuje" lub "reprezentuje".</p>
+            <p><strong>Sprawdzanie opcji:</strong></p>
+            <ul>
+                <li>A) consider: To nie ma sensu. Obrazy nie mogą „rozważać” stylu.</li>
+                <li>B) express: To pasuje. Obraz nie w pełni „wyraża” styl. To możliwa odpowiedź.</li>
+                <li>C) disprove: Obraz nie „obalają” stylu, po prostu nie pokazuje go idealnie.</li>
+                <li>D) confirm: To jest przeciwieństwo tego, co sugerują wskazówki.</li>
+            </ul>
+            <p><strong>Ostateczna odpowiedź: B</strong> jest najlepszym wyborem.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>2. Define-the-Word Questions 📖 (English)</h3>
+            <p>These questions ask for the meaning of a specific underlined word in a text, usually from literature. The word often has multiple meanings, but only one fits the sentence.</p>
+            <h4>Strategy:</h4>
+            <ul>
+                <li>Read the sentence with the underlined word.</li>
+                <li>Focus on the word's specific use. Ignore other meanings you might know.</li>
+                <li>Substitute the answer choices into the sentence. The correct answer will be a synonym that fits the context perfectly.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p><strong>Sentence:</strong> "...he learned to make a few <strong>set</strong>, opening moves."</p>
+            <p>The word "set" has many meanings: "to place," "a group," "fixed," "to adjust," etc.</p>
+            <p><strong>The context:</strong> The character learned "a few" of these moves, suggesting they are a fixed, specific sequence of actions, not random ones.</p>
+            <p><strong>Checking choices:</strong></p>
+            <ul>
+                <li>A) Adjusted: This doesn't fit. The moves aren't being "adjusted."</li>
+                <li>B) Developed: This implies creating new moves, but the text says he learned a few specific ones.</li>
+                <li>C) Fixed: This is perfect. It means the moves are established and unchanging.</li>
+                <li>D) Positioned: While moves involve positioning, the word "set" here describes the type of moves, not the act of positioning.</li>
+            </ul>
+            <p><strong>Final Answer: C</strong> is the best fit.</p>
+        </div>
+        <div class="lang-column">
+            <h3>2. Pytania "Define-the-Word" 📖 (Polish)</h3>
+            <p>Te pytania dotyczą znaczenia konkretnego podkreślonego słowa w tekście, zazwyczaj z literatury. Słowo często ma wiele znaczeń, ale tylko jedno pasuje do zdania.</p>
+            <h4>Strategia:</h4>
+            <ul>
+                <li>Przeczytaj zdanie z podkreślonym słowem.</li>
+                <li>Skup się na konkretnym użyciu słowa. Ignoruj inne znaczenia, które możesz znać.</li>
+                <li>Podstawiaj opcje odpowiedzi do zdania. Poprawna odpowiedź będzie synonimem, który pasuje do kontekstu idealnie.</li>
+            </ul>
+            <h4>Przykład:</h4>
+            <p><strong>Zdanie:</strong> „…nauczył się robić kilka <strong>set</strong>, otwierających ruchów.” (w tym kontekście "set" to 'ustalone')</p>
+            <p>Słowo „set” ma wiele znaczeń: „umieścić”, „zestaw”, „ustalony”, „dostosowany” itd.</p>
+            <p><strong>Kontekst:</strong> Postać nauczyła się „kilku” z tych ruchów, co sugeruje, że są to ustalone, specyficzne sekwencje działań, a nie przypadkowe.</p>
+            <p><strong>Sprawdzanie opcji:</strong></p>
+            <ul>
+                <li>A) Adjusted (dostosowane): To nie pasuje. Ruchy nie są „dostosowywane”.</li>
+                <li>B) Developed (rozwinięte): To sugeruje tworzenie nowych ruchów, ale tekst mówi, że nauczył się kilku konkretnych.</li>
+                <li>C) Fixed (ustalone): To jest idealne. Oznacza, że ruchy są ustalone i niezmienne.</li>
+                <li>D) Positioned (ustawione): Chociaż ruchy wiążą się z ustawianiem, słowo „set” opisuje tutaj rodzaj ruchów, a nie akt ich ustawiania.</li>
+            </ul>
+            <p><strong>Ostateczna odpowiedź: C</strong> jest najlepszym wyborem.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>Dealing with Tricky Words (English)</h3>
+            <p>Sometimes, you'll see words you don't know. Don't panic! It's like seeing a new defense.</p>
+            <ul>
+                <li>Use the process of elimination first. Check all the other answers you do know. If a familiar word makes perfect sense, pick it! The SAT doesn't always choose the hardest word just to be tricky.</li>
+                <li>If you have to guess, you've done all you can. But if you have a list of academic vocabulary (like from this course), you might recognize it!</li>
+            </ul>
+        </div>
+        <div class="lang-column">
+            <h3>Jak radzić sobie z trudnymi słowami (Polish)</h3>
+            <p>Czasami zobaczysz słowa, których nie znasz. Nie panikuj! To jak zobaczenie nowej obrony.</p>
+            <ul>
+                <li>Najpierw użyj eliminacji. Sprawdź wszystkie inne odpowiedzi, które znasz. Jeśli znane słowo ma idealny sens, wybierz je! SAT nie zawsze wybiera najtrudniejsze słowo, żeby Cię oszukać.</li>
+                <li>Jeśli musisz zgadywać, zrobiłeś wszystko, co mogłeś. Ale jeśli masz listę słownictwa akademickiego (na przykład z tego kursu), możesz je rozpoznać!</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
 `
 };
 
@@ -591,6 +685,12 @@ startQuizBtn.addEventListener("click", async () => {
     alert("Please enter a valid Gmail address to start.");
   }
 });
+backToSectionsBtn.addEventListener("click", () => {
+  // Hide the intro, show the start/sections page
+  introContentDiv.style.display = "none";
+  startScreen.style.display = "block";
+});
+
 
 async function loadQuiz(topic, isRemedial = false) {
   try {
