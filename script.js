@@ -1,5 +1,6 @@
 const startBtn = document.getElementById("startBtn");
 const exerciseSelect = document.getElementById("exercise");
+const backToSectionsBtn = document.getElementById("backToSectionsBtn");
 const startScreen = document.getElementById("startScreen");
 const quizScreen = document.getElementById("quizScreen");
 const introContentDiv = document.getElementById("introContent");
@@ -33,11 +34,8 @@ let totalQuestions = 0;
 let hintUsed = false;
 let quizLog = [];
 
-
-
-// Keep your original introContent intact
-const introContent = {
- "Inferences": `<!DOCTYPE html>
+// Keep your original introContent intact - PASTE YOUR INTRO CONTENT HERE
+const introContent = {"Inferences": `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -404,463 +402,213 @@ Błędne odpowiedzi są jak zawodnik, który udaje, że podaje, żebyś poruszy�
 </body>
 </html>`,
   "Word in Context": `<!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAT Words-in-Context: The Playbook</title>
-<style>
-body {
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-line-height: 1.6;
-color: #333;
-max-width: 900px;
-margin: 0 auto;
-padding: 20px;
-background-color: #f4f4f9;
-}
-.container {
-background: #fff;
-padding: 30px;
-border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-h1 {
-color: #1a1a1a;
-text-align: center;
-font-size: 2.5em;
-margin-bottom: 0.5em;
-}
-h2 {
-color: #4a4a4a;
-border-bottom: 2px solid #e0e0e0;
-padding-bottom: 5px;
-margin-top: 2em;
-font-size: 1.8em;
-}
-h3 {
-color: #5a5a5a;
-margin-top: 1.5em;
-}
-p {
-margin-bottom: 1em;
-font-size: 1.1em;
-}
-.polish-text {
-color: #666;
-font-style: italic;
-margin-top: -1em;
-margin-bottom: 1em;
-padding-left: 20px;
-border-left: 3px solid #ddd;
-}
-.example-box {
-border: 2px solid #4CAF50;
-border-left: 5px solid #4CAF50;
-padding: 20px;
-margin: 20px 0;
-background-color: #e8f5e9;
-border-radius: 8px;
-}
-.tip-box {
-border: 2px solid #2196F3;
-border-left: 5px solid #2196F3;
-padding: 15px;
-margin: 15px 0;
-background-color: #e3f2fd;
-border-radius: 8px;
-}
-.warning-box {
-border: 2px solid #f44336;
-border-left: 5px solid #f44336;
-padding: 15px;
-margin: 15px 0;
-background-color: #ffebee;
-border-radius: 8px;
-}
-.code-block {
-background-color: #f8f8f8;
-border: 1px solid #ddd;
-padding: 15px;
-border-radius: 8px;
-margin-top: 1em;
-}
-ul, ol {
-padding-left: 25px;
-margin-bottom: 1em;
-}
-li {
-margin-bottom: 0.5em;
-}
-hr {
-border: none;
-height: 1px;
-background-color: #e0e0e0;
-margin: 40px 0;
-}
-.highlight {
-background-color: #ffeb3b;
-padding: 2px 5px;
-border-radius: 4px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Words-in-Context</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+        }
+        .bilingual-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .lang-column {
+            flex: 1;
+            padding: 10px;
+            background: #e9e9e9;
+            border-radius: 5px;
+        }
+        .lang-column h3 {
+            margin-top: 0;
+            border: none;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f0f8ff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 5px solid #007bff;
+            border-radius: 3px;
+        }
+        strong {
+            color: #d35400;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-<h1>Words-in-Context: Reading the Game, Word by Word 🏀</h1>
-<p>English: These questions are a major part of the SAT Reading section. You'll see them at the beginning of each module. They ask you to choose a word that fits best in a sentence. The key is to look at the context—the words and ideas around the blank—to figure out the correct meaning. Just because a word has one meaning you know doesn't mean it works in every sentence. For example, "dribble" can mean to move a basketball, but it also means a small amount of liquid. The context tells you which one is correct.</p>
-<p class="polish-text">Polish: Te pytania stanowią główną część sekcji czytania na SAT. Pojawiają się na początku każdego modułu. Proszą Cię o wybranie słowa, które najlepiej pasuje do zdania. Kluczem jest spojrzenie na kontekst — słowa i pomysły wokół luki — aby ustalić właściwe znaczenie. To, że znasz jedno znaczenie słowa, nie oznacza, że będzie ono pasować do każdego zdania. Na przykład, "dribble" może oznaczać prowadzenie piłki w koszykówce, ale także małą ilość płynu. Kontekst powie Ci, które znaczenie jest właściwe.</p>
+    <h1>An American Coach's Playbook for the SAT</h1>
 
-<hr>
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>What Are Words-in-Context Questions? (English)</h3>
+            <p>These questions are a major part of the SAT Reading section. You'll see them at the beginning of each module. They ask you to choose a word that fits best in a sentence. The key is to look at the <strong>context</strong>—the words and ideas around the blank—to figure out the correct meaning. Just because a word has one meaning you know doesn't mean it works in every sentence. For example, "dribble" can mean to move a basketball, but it also means a small amount of liquid. The context tells you which one is correct.</p>
+        </div>
+        <div class="lang-column">
+            <h3>Czym są pytania "Words-in-Context"? (Polish)</h3>
+            <p>Te pytania stanowią główną część sekcji czytania na SAT. Pojawiają się na początku każdego modułu. Proszą Cię o wybranie słowa, które najlepiej pasuje do zdania. Kluczem jest spojrzenie na <strong>kontekst</strong> — słowa i pomysły wokół luki — aby ustalić właściwe znaczenie. To, że znasz jedno znaczenie słowa, nie oznacza, że będzie ono pasować do każdego zdania. Na przykład, "dribble" może oznaczać prowadzenie piłki w koszykówce, ale także małą ilość płynu. Kontekst powie Ci, które znaczenie jest właściwe.</p>
+        </div>
+    </div>
 
-<h2>The Game Plan: Two Types of Questions</h2>
-<p>There are two main types of these questions: **Fill-in-the-Blank** and **Define-the-Word**.</p>
+    <hr>
 
-<h3>1. Fill-in-the-Blank Questions 📝</h3>
-<p>English: These questions ask you to complete a sentence. The question is always the same: "Which choice completes the text with the most logical and precise word or phrase?"</p>
-<p>Here's the strategy, step-by-step:</p>
-<ol>
-    <li>Read the whole sentence, not just the words around the blank.</li>
-    <li>Look for clues. What are the other words in the sentence telling you? Do they suggest a positive or a negative idea?</li>
-    <li>Predict an answer. Before you look at the choices, try to think of a word that could fit. This helps you avoid getting tricked by the wrong answers.</li>
-    <li>Eliminate the wrong choices. Plug each answer choice into the sentence and see if it makes sense. The correct answer will be the one that fits perfectly.</li>
-</ol>
+    <h2>The Game Plan: Two Types of Questions</h2>
 
-<div class="example-box">
-    <h4>Example:</h4>
-    <p>The sentence: "The painting... does not fully **_______** the artist's signature style."</p>
-    <p><strong>Clues:</strong> The text mentions "skeptics' views" and that the painting has "uncharacteristically crude technique." This tells us the painting doesn't match Vermeer's style.</p>
-    <p><strong>Prediction:</strong> A word like "match," "show," or "represent."</p>
-    <p><strong>Checking choices:</strong></p>
-    <ul>
-        <li>A) consider: This doesn't make sense. Paintings can't "consider" a style.</li>
-        <li>B) express: This fits. The painting doesn't fully "express" the style. It's a possible answer.</li>
-        <li>C) disprove: The painting doesn't "disprove" the style itself; it just doesn't show it perfectly.</li>
-        <li>D) confirm: This is the opposite of what the clues suggest.</li>
-    </ul>
-    <p><strong>Final Answer:</strong> B is the best choice.</p>
-</div>
-<p class="polish-text">Polish: Te pytania proszą Cię o uzupełnienie zdania. Pytanie jest zawsze takie samo: „Która opcja uzupełnia tekst najbardziej logicznym i precyzyjnym słowem lub wyrażeniem?”.</p>
-<p class="polish-text">Oto strategia, krok po kroku:</p>
-<ol class="polish-text">
-    <li>Przeczytaj całe zdanie, a nie tylko słowa wokół luki.</li>
-    <li>Szukaj wskazówek. Co mówią Ci inne słowa w zdaniu? Czy sugerują pozytywną czy negatywną ideę?</li>
-    <li>Przewidź odpowiedź. Zanim spojrzysz na opcje, spróbuj wymyślić słowo, które mogłoby pasować. To pomoże Ci uniknąć pułapek.</li>
-    <li>Eliminuj błędne opcje. Wstaw każdą opcję do zdania i sprawdź, czy ma sens. Poprawna odpowiedź będzie tą, która pasuje idealnie.</li>
-</ol>
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>1. Fill-in-the-Blank Questions 📝 (English)</h3>
+            <p>These questions ask you to complete a sentence. The question is always the same: "Which choice completes the text with the most logical and precise word or phrase?"</p>
+            <h4>Here's the strategy, step-by-step:</h4>
+            <ul>
+                <li>Read the whole sentence, not just the words around the blank.</li>
+                <li>Look for clues. What are the other words in the sentence telling you? Do they suggest a positive or a negative idea?</li>
+                <li>Predict an answer. Before you look at the choices, try to think of a word that could fit. This helps you avoid getting tricked by the wrong answers.</li>
+                <li>Eliminate the wrong choices. Plug each answer choice into the sentence and see if it makes sense. The correct answer will be the one that fits perfectly.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p><strong>The sentence:</strong> "The painting... does not fully <strong>_______</strong> the artist's signature style."</p>
+            <p><strong>Clues:</strong> The text mentions "skeptics' views" and that the painting has "uncharacteristically crude technique." This tells us the painting doesn't match Vermeer's style.</p>
+            <p><strong>Prediction:</strong> A word like "match," "show," or "represent."</p>
+            <p><strong>Checking choices:</strong></p>
+            <ul>
+                <li>A) consider: This doesn't make sense. Paintings can't "consider" a style.</li>
+                <li>B) express: This fits. The painting doesn't fully "express" the style. It's a possible answer.</li>
+                <li>C) disprove: The painting doesn't "disprove" the style itself; it just doesn't show it perfectly.</li>
+                <li>D) confirm: This is the opposite of what the clues suggest.</li>
+            </ul>
+            <p><strong>Final Answer: B</strong> is the best choice.</p>
+        </div>
+        <div class="lang-column">
+            <h3>1. Pytania "Fill-in-the-Blank" 📝 (Polish)</h3>
+            <p>Te pytania proszą Cię o uzupełnienie zdania. Pytanie jest zawsze takie samo: „Która opcja uzupełnia tekst najbardziej logicznym i precyzyjnym słowem lub wyrażeniem?”.</p>
+            <h4>Oto strategia, krok po kroku:</h4>
+            <ul>
+                <li>Przeczytaj całe zdanie, a nie tylko słowa wokół luki.</li>
+                <li>Szukaj wskazówek. Co mówią Ci inne słowa w zdaniu? Czy sugerują pozytywną czy negatywną ideę?</li>
+                <li>Przewidź odpowiedź. Zanim spojrzysz na opcje, spróbuj wymyślić słowo, które mogłoby pasować. To pomoże Ci uniknąć pułapek.</li>
+                <li>Eliminuj błędne opcje. Wstaw każdą opcję do zdania i sprawdź, czy ma sens. Poprawna odpowiedź będzie tą, która pasuje idealnie.</li>
+            </ul>
+            <h4>Przykład:</h4>
+            <p><strong>Zdanie:</strong> "Obraz... nie w pełni <strong>_______</strong> charakterystyczny styl artysty."</p>
+            <p><strong>Wskazówki:</strong> Tekst wspomina o „poglądach sceptyków” oraz o tym, że obraz ma „nietypowo surową technikę”. To mówi nam, że obraz nie pasuje do stylu Vermeera.</p>
+            <p><strong>Przewidywanie:</strong> Słowo takie jak "pasuje", "pokazuje" lub "reprezentuje".</p>
+            <p><strong>Sprawdzanie opcji:</strong></p>
+            <ul>
+                <li>A) consider: To nie ma sensu. Obrazy nie mogą „rozważać” stylu.</li>
+                <li>B) express: To pasuje. Obraz nie w pełni „wyraża” styl. To możliwa odpowiedź.</li>
+                <li>C) disprove: Obraz nie „obalają” stylu, po prostu nie pokazuje go idealnie.</li>
+                <li>D) confirm: To jest przeciwieństwo tego, co sugerują wskazówki.</li>
+            </ul>
+            <p><strong>Ostateczna odpowiedź: B</strong> jest najlepszym wyborem.</p>
+        </div>
+    </div>
 
-<hr>
+    <hr>
 
-<h3>2. Define-the-Word Questions 📖</h3>
-<p>English: These questions ask for the meaning of a specific underlined word in a text, usually from literature. The word often has multiple meanings, but only one fits the sentence.</p>
-<p><strong>Strategy:</strong></p>
-<ol>
-    <li>Read the sentence with the underlined word.</li>
-    <li>Focus on the word's specific use. Ignore other meanings you might know.</li>
-    <li>Substitute the answer choices into the sentence. The correct answer will be a synonym that fits the context perfectly.</li>
-</ol>
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>2. Define-the-Word Questions 📖 (English)</h3>
+            <p>These questions ask for the meaning of a specific underlined word in a text, usually from literature. The word often has multiple meanings, but only one fits the sentence.</p>
+            <h4>Strategy:</h4>
+            <ul>
+                <li>Read the sentence with the underlined word.</li>
+                <li>Focus on the word's specific use. Ignore other meanings you might know.</li>
+                <li>Substitute the answer choices into the sentence. The correct answer will be a synonym that fits the context perfectly.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p><strong>Sentence:</strong> "...he learned to make a few <strong>set</strong>, opening moves."</p>
+            <p>The word "set" has many meanings: "to place," "a group," "fixed," "to adjust," etc.</p>
+            <p><strong>The context:</strong> The character learned "a few" of these moves, suggesting they are a fixed, specific sequence of actions, not random ones.</p>
+            <p><strong>Checking choices:</strong></p>
+            <ul>
+                <li>A) Adjusted: This doesn't fit. The moves aren't being "adjusted."</li>
+                <li>B) Developed: This implies creating new moves, but the text says he learned a few specific ones.</li>
+                <li>C) Fixed: This is perfect. It means the moves are established and unchanging.</li>
+                <li>D) Positioned: While moves involve positioning, the word "set" here describes the type of moves, not the act of positioning.</li>
+            </ul>
+            <p><strong>Final Answer: C</strong> is the best fit.</p>
+        </div>
+        <div class="lang-column">
+            <h3>2. Pytania "Define-the-Word" 📖 (Polish)</h3>
+            <p>Te pytania dotyczą znaczenia konkretnego podkreślonego słowa w tekście, zazwyczaj z literatury. Słowo często ma wiele znaczeń, ale tylko jedno pasuje do zdania.</p>
+            <h4>Strategia:</h4>
+            <ul>
+                <li>Przeczytaj zdanie z podkreślonym słowem.</li>
+                <li>Skup się na konkretnym użyciu słowa. Ignoruj inne znaczenia, które możesz znać.</li>
+                <li>Podstawiaj opcje odpowiedzi do zdania. Poprawna odpowiedź będzie synonimem, który pasuje do kontekstu idealnie.</li>
+            </ul>
+            <h4>Przykład:</h4>
+            <p><strong>Zdanie:</strong> „…nauczył się robić kilka <strong>set</strong>, otwierających ruchów.” (w tym kontekście "set" to 'ustalone')</p>
+            <p>Słowo „set” ma wiele znaczeń: „umieścić”, „zestaw”, „ustalony”, „dostosowany” itd.</p>
+            <p><strong>Kontekst:</strong> Postać nauczyła się „kilku” z tych ruchów, co sugeruje, że są to ustalone, specyficzne sekwencje działań, a nie przypadkowe.</p>
+            <p><strong>Sprawdzanie opcji:</strong></p>
+            <ul>
+                <li>A) Adjusted (dostosowane): To nie pasuje. Ruchy nie są „dostosowywane”.</li>
+                <li>B) Developed (rozwinięte): To sugeruje tworzenie nowych ruchów, ale tekst mówi, że nauczył się kilku konkretnych.</li>
+                <li>C) Fixed (ustalone): To jest idealne. Oznacza, że ruchy są ustalone i niezmienne.</li>
+                <li>D) Positioned (ustawione): Chociaż ruchy wiążą się z ustawianiem, słowo „set” opisuje tutaj rodzaj ruchów, a nie akt ich ustawiania.</li>
+            </ul>
+            <p><strong>Ostateczna odpowiedź: C</strong> jest najlepszym wyborem.</p>
+        </div>
+    </div>
 
-<div class="example-box">
-    <h4>Example:</h4>
-    <p>Sentence: "...he learned to make a few <span class="highlight">set</span>, opening moves."</p>
-    <p>The word "set" has many meanings: "to place," "a group," "fixed," "to adjust," etc.</p>
-    <p><strong>The context:</strong> The character learned "a few" of these moves, suggesting they are a fixed, specific sequence of actions, not random ones.</p>
-    <p><strong>Checking choices:</strong></p>
-    <ul>
-        <li>A) Adjusted: This doesn't fit. The moves aren't being "adjusted."</li>
-        <li>B) Developed: This implies creating new moves, but the text says he learned a few specific ones.</li>
-        <li>C) Fixed: This is perfect. It means the moves are established and unchanging.</li>
-        <li>D) Positioned: While moves involve positioning, the word "set" here describes the type of moves, not the act of positioning.</li>
-    </ul>
-    <p><strong>Final Answer:</strong> C is the best fit.</p>
-</div>
-<p class="polish-text">Polish: Te pytania dotyczą znaczenia konkretnego podkreślonego słowa w tekście, zazwyczaj z literatury. Słowo często ma wiele znaczeń, ale tylko jedno pasuje do zdania.</p>
-<p class="polish-text">Strategia:</p>
-<ol class="polish-text">
-    <li>Przeczytaj zdanie z podkreślonym słowem.</li>
-    <li>Skup się na konkretnym użyciu słowa. Ignoruj inne znaczenia, które możesz znać.</li>
-    <li>Podstawiaj opcje odpowiedzi do zdania. Poprawna odpowiedź będzie synonimem, który pasuje do kontekstu idealnie.</li>
-</ol>
+    <hr>
 
-<hr>
+    <div class="bilingual-section">
+        <div class="lang-column">
+            <h3>Dealing with Tricky Words (English)</h3>
+            <p>Sometimes, you'll see words you don't know. Don't panic! It's like seeing a new defense.</p>
+            <ul>
+                <li>Use the process of elimination first. Check all the other answers you do know. If a familiar word makes perfect sense, pick it! The SAT doesn't always choose the hardest word just to be tricky.</li>
+                <li>If you have to guess, you've done all you can. But if you have a list of academic vocabulary (like from this course), you might recognize it!</li>
+            </ul>
+        </div>
+        <div class="lang-column">
+            <h3>Jak radzić sobie z trudnymi słowami (Polish)</h3>
+            <p>Czasami zobaczysz słowa, których nie znasz. Nie panikuj! To jak zobaczenie nowej obrony.</p>
+            <ul>
+                <li>Najpierw użyj eliminacji. Sprawdź wszystkie inne odpowiedzi, które znasz. Jeśli znane słowo ma idealny sens, wybierz je! SAT nie zawsze wybiera najtrudniejsze słowo, żeby Cię oszukać.</li>
+                <li>Jeśli musisz zgadywać, zrobiłeś wszystko, co mogłeś. Ale jeśli masz listę słownictwa akademickiego (na przykład z tego kursu), możesz je rozpoznać!</li>
+            </ul>
+        </div>
+    </div>
 
-<h2>Dealing with Tricky Words 🧠</h2>
-<p>English: Sometimes, you'll see words you don't know. Don't panic! It's like seeing a new defense.</p>
-<div class="tip-box">
-    <p>Use the process of elimination first. Check all the other answers you do know. If a familiar word makes perfect sense, pick it! The SAT doesn't always choose the hardest word just to be tricky.</p>
-    <p>If you have to guess, you've done all you can. But if you have a list of academic vocabulary (like from this course), you might recognize it!</p>
-</div>
-<p class="polish-text">Polish: Czasami zobaczysz słowa, których nie znasz. Nie panikuj! To jak zobaczenie nowej obrony.</p>
-<p class="polish-text">Najpierw użyj eliminacji. Sprawdź wszystkie inne odpowiedzi, które znasz. Jeśli znane słowo ma idealny sens, wybierz je! SAT nie zawsze wybiera najtrudniejsze słowo, żeby Cię oszukać.</p>
-<p class="polish-text">Jeśli musisz zgadywać, zrobiłeś wszystko, co mogłeś. Ale jeśli masz listę słownictwa akademickiego (na przykład z tego kursu), możesz je rozpoznać!</p>
-
-<hr>
-
-<p>Remember this key principle: Always check if the word works in the sentence. Don't just look for a word that seems related to the topic. If it doesn't fit the sentence like a perfectly-fitting basketball shoe, it's not the right answer. 🏀</p>
 </div>
 
 </body>
-</html>`,
-  "Verb Tense": `<h2>📘 🏀 Mastering Verb Tense: Your Playbook for SAT Success & College Basketball Dreams</h2>
-    <p>Imagine you're on the basketball court. Every move—whether it's a pass, dribble, or shot—happens at a specific time. Did you pass the ball a moment ago? Are you dribbling right now? Will you shoot soon?</p>
-    <p>Just like in basketball, English uses verb tenses to show when actions happen. Understanding verb tense is like knowing the game clock: it helps you stay in control of the sentence and score points on the SAT Writing and Language section. Mastering this will help you both in the test room and on the court as you chase your dream of playing college basketball in the USA.</p>
-
-    <h3>🔤 What Is Verb Tense?</h3>
-    <p>Verb tense shows the time of an action or a state of being. It tells us whether something happened in the past, is happening now, or will happen in the future.</p>
-    <p>🏀 <strong>Example:</strong></p>
-    <ul>
-        <li>Past: Yesterday, I practiced my free throws.</li>
-        <li>Present: Right now, I am practicing my dribbling.</li>
-        <li>Future: Tomorrow, I will practice my jump shot.</li>
-    </ul>
-
-    <h2>📚 1. Key Tenses for SAT Success</h2>
-    <p>The SAT focuses on a few core verb tenses. Think of these like your playbook moves—you need to know when to use which one.</p>
-
-    <h3>🏀 1. Simple Present Tense</h3>
-    <p><strong>Form:</strong> Base verb (add -s or -es for he/she/it)</p>
-    <p><strong>Examples:</strong></p>
-    <ul>
-        <li>I play, You play, He/She plays, We play, They play</li>
-    </ul>
-    <p><strong>When to Use It (like a consistent dribble):</strong></p>
-    <ul>
-        <li>Habits/Routines: I wake up early every day to train.</li>
-        <li>Facts/General Truths: The sun rises in the east.</li>
-        <li>Scheduled Future Events: Our flight leaves at 8 AM tomorrow.</li>
-    </ul>
-    <p>🇵🇱 <strong>Polish Tip:</strong> Similar to niedokonany (imperfective) aspect — e.g., Ja gram w koszykówkę (I play basketball).</p>
-
-    <h3>🏀 2. Simple Past Tense</h3>
-    <p><strong>Form:</strong></p>
-    <ul>
-        <li>Regular: verb + -ed (e.g., play → played)</li>
-        <li>Irregular: memorize! (e.g., go → went, run → ran)</li>
-    </ul>
-    <p><strong>When to Use It (like a completed shot):</strong></p>
-    <ul>
-        <li>Completed Actions in the Past:
-            <ul>
-                <li>We won the game last night.</li>
-                <li>I finished my homework before practice.</li>
-            </ul>
-        </li>
-    </ul>
-    <p>🇵🇱 <strong>Polish Tip:</strong> Very similar to Polish past tense — Ja grałem / grałam (I played).</p>
-
-    <h3>🏀 3. Simple Future Tense</h3>
-    <p><strong>Form:</strong> will + base verb</p>
-    <p><strong>When to Use It (like future strategy):</strong></p>
-    <ul>
-        <li>Planned/Expected Future Actions:
-            <ul>
-                <li>I will study for the SAT after practice.</li>
-                <li>We will travel to the tournament next month.</li>
-            </ul>
-        </li>
-    </ul>
-    <p>🇵🇱 <strong>Polish Tip:</strong> Similar to będę + verb — Będę grał / grała.</p>
-
-    <h3>🏀 4. Present Perfect Tense</h3>
-    <p><strong>Form:</strong></p>
-    <ul>
-        <li>have/has + past participle</li>
-        <li>Regular verbs: same as simple past (played)</li>
-        <li>Irregular: go → gone, eat → eaten</li>
-    </ul>
-    <p><strong>When to Use It (like skills you’ve developed):</strong></p>
-    <ul>
-        <li>Actions that started in the past and continue now:
-            <ul>
-                <li>I have played basketball since I was six.</li>
-                <li>She has lived here for five years.</li>
-            </ul>
-        </li>
-        <li>Past experiences relevant now:
-            <ul>
-                <li>I have seen that movie before.</li>
-                <li>Our team has won many games this season.</li>
-            </ul>
-        </li>
-    </ul>
-    <p>🇵🇱 <strong>Polish Tip:</strong> This is tricky! Polish doesn’t have a present perfect tense. You often use past tense (Zjadłem obiad), but in English:</p>
-    <ul>
-        <li>If it affects the present: I have eaten</li>
-        <li>If it’s finished in the past: I ate</li>
-    </ul>
-
-    <h3>🏀 5. Past Perfect Tense</h3>
-    <p><strong>Form:</strong> had + past participle</p>
-    <p><strong>When to Use It (like reviewing an earlier play):</strong></p>
-    <ul>
-        <li>Action completed before another past action:
-            <ul>
-                <li>By the time the coach arrived, we had started warming up.</li>
-                <li>I had never visited the USA before I came for college.</li>
-            </ul>
-        </li>
-    </ul>
-    <p>🇵🇱 <strong>Polish Tip:</strong> Use for the “earlier past” — two actions in the past, the one that happened first uses past perfect.</p>
-
-    <h3>🏀 6. Progressive Tenses (Quick Guide)</h3>
-    <p>These tenses show ongoing actions.</p>
-    <table style="width:100%; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; padding: 8px;">Tense</th>
-                <th style="border: 1px solid black; padding: 8px;">Form</th>
-                <th style="border: 1px solid black; padding: 8px;">Example</th>
-                <th style="border: 1px solid black; padding: 8px;">Use</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">Present Progressive</td>
-                <td style="border: 1px solid black; padding: 8px;">am/is/are + verb-ing</td>
-                <td style="border: 1px solid black; padding: 8px;">I am studying for the SAT.</td>
-                <td style="border: 1px solid black; padding: 8px;">Action happening now</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">Past Progressive</td>
-                <td style="border: 1px solid black; padding: 8px;">was/were + verb-ing</td>
-                <td style="border: 1px solid black; padding: 8px;">I was sleeping when the phone rang.</td>
-                <td style="border: 1px solid black; padding: 8px;">Ongoing past action</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">Future Progressive</td>
-                <td style="border: 1px solid black; padding: 8px;">will be + verb-ing</td>
-                <td style="border: 1px solid black; padding: 8px;">I will be practicing tomorrow at 3.</td>
-                <td style="border: 1px solid black; padding: 8px;">Future action in progress</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>🏆 2. SAT-Specific Verb Tense Rules</h2>
-    
-    <h3>🧩 Rule 1: Consistency (Sequence of Tenses)</h3>
-    <p>Keep tenses consistent unless there’s a reason to change.</p>
-    <ul>
-        <li>✅ Correct: When the referee blew the whistle, the game stopped.</li>
-        <li>❌ Incorrect: When the referee blew the whistle, the game stops.</li>
-        <li>✅ Correct (with a reason): My coach taught me that hard work is essential. (General truth stays in present.)</li>
-    </ul>
-
-    <h3>🧩 Rule 2: Time Markers = Clues to Tense</h3>
-    <table style="width:100%; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; padding: 8px;">Time Marker</th>
-                <th style="border: 1px solid black; padding: 8px;">Common Tense</th>
-                <th style="border: 1px solid black; padding: 8px;">Example</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">yesterday, ago, last year</td>
-                <td style="border: 1px solid black; padding: 8px;">Simple Past</td>
-                <td style="border: 1px solid black; padding: 8px;">We won the championship last year.</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">now, currently</td>
-                <td style="border: 1px solid black; padding: 8px;">Present Progressive</td>
-                <td style="border: 1px solid black; padding: 8px;">I am dribbling now.</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">every day, always</td>
-                <td style="border: 1px solid black; padding: 8px;">Simple Present</td>
-                <td style="border: 1px solid black; padding: 8px;">Our team practices every day.</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">tomorrow, next week</td>
-                <td style="border: 1px solid black; padding: 8px;">Simple Future</td>
-                <td style="border: 1px solid black; padding: 8px;">We will play next week.</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">since, for</td>
-                <td style="border: 1px solid black; padding: 8px;">Present Perfect</td>
-                <td style="border: 1px solid black; padding: 8px;">I have trained since childhood.</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">by the time, before</td>
-                <td style="border: 1px solid black; padding: 8px;">Past Perfect</td>
-                <td style="border: 1px solid black; padding: 8px;">They had won before I joined the team.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3>🧩 Rule 3: Conditional Sentences (If/Then)</h3>
-    <table style="width:100%; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; padding: 8px;">Type</th>
-                <th style="border: 1px solid black; padding: 8px;">Structure</th>
-                <th style="border: 1px solid black; padding: 8px;">Example</th>
-                <th style="border: 1px solid black; padding: 8px;">Use</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">Type 1: Real</td>
-                <td style="border: 1px solid black; padding: 8px;">If + Present, will + Base Verb</td>
-                <td style="border: 1px solid black; padding: 8px;">If I train, I will improve.</td>
-                <td style="border: 1px solid black; padding: 8px;">Real future possibility</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">Type 2: Unreal Present</td>
-                <td style="border: 1px solid black; padding: 8px;">If + Past, would + Base Verb</td>
-                <td style="border: 1px solid black; padding: 8px;">If I were taller, I would dunk.</td>
-                <td style="border: 1px solid black; padding: 8px;">Hypothetical now</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; padding: 8px;">Type 3: Unreal Past</td>
-                <td style="border: 1px solid black; padding: 8px;">If + Past Perfect, would have + Past Participle</td>
-                <td style="border: 1px solid black; padding: 8px;">If I had trained harder, I would have made the team.</td>
-                <td style="border: 1px solid black; padding: 8px;">Hypothetical past</td>
-            </tr>
-        </tbody>
-    </table>
-    <p>Note: Always use “were” for all subjects in Type 2 hypothetical clauses: If I were, If he were...</p>
-
-    <h3>🧩 Rule 4: Verbs of Thinking or Believing</h3>
-    <p>The tense of the verb inside the sentence usually matches the tense of the reporting verb.</p>
-    <ul>
-        <li>She believed the team was ready. (Past + Past)</li>
-        <li>He thinks practice is important. (Present + Present)</li>
-    </ul>
-
-    <h2>📝 4. How the SAT Tests Verb Tense</h2>
-    <p>You may be asked to:</p>
-    <ul>
-        <li>✅ Fix tense consistency errors</li>
-        <li>🔍 Choose the correct tense based on time markers</li>
-        <li>🔁 Correct improper switching between tenses</li>
-        <li>❓ Use the right structure in if/then sentences</li>
-        <li>📊 Recognize the difference between past vs. present perfect</li>
-    </ul>
-
-    <h2>🧠 5. Final Tips: Play to Win</h2>
-    <ul>
-        <li>🏀 <strong>Read Like a Player Studies Film:</strong><br>
-            News articles, sports reports, and academic texts help build tense awareness.</li>
-        <li>⏱ <strong>Find the Time Markers:</strong><br>
-            Words like yesterday, now, since help you choose the correct tense.</li>
-        <li>📏 <strong>Check for Consistency:</strong><br>
-            Don’t switch tenses mid-sentence unless there’s a logical reason.</li>
-        <li>📚 <strong>Master Irregular Verbs:</strong><br>
-            No shortcuts here—memorize key forms (go/went/gone, eat/ate/eaten, etc.).</li>
-        <li>📈 <strong>Drill with SAT Practice:</strong><br>
-            Do tense-focused questions regularly to build muscle memory.</li>
-    </ul>
-
-    <h2>🎯 6. Conclusion: Your Game, Your Grammar</h2>
-    <p>To be a great basketball player, you need to know when to pass, when to shoot, and when to defend. To be a great English writer—and ace the SAT—you need to know when to use which tense. Your dream of college basketball in the USA depends not only on your jump shot but also on your ability to express yourself clearly and confidently.</p>
-    <p>So practice your grammar like you practice your free throws—and success will follow.</p>`,
+</html>
+`
 };
+
 async function logUserQuiz(email, topic, score, hintUsed, qaLog) {
   try {
-    const response = await fetch("http://localhost:5000/log-score", {
+    const response = await fetch("http://165.232.176.123/log-score", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, topic, score, hintUsed, qaLog }),
@@ -873,9 +621,31 @@ async function logUserQuiz(email, topic, score, hintUsed, qaLog) {
   }
 }
 
+// This is the function to log a single question at a time.
+async function logQuestion(email, topic, questionEntry) {
+  try {
+    const response = await fetch("http://165.232.176.123/log-score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        topic,
+        score: questionEntry.score,
+        hintUsed: questionEntry.hintUsed, // Already "YES" or "NO" string
+        qaLog: [questionEntry],
+      }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Error logging question");
+    console.log("✅ Question logged:", data.message);
+  } catch (err) {
+    console.error("❌ Failed to log question:", err);
+  }
+}
+
 async function fetchStudyMaterial(topic) {
   try {
-    const response = await fetch("http://localhost:5000/ai-study-material", {
+    const response = await fetch("http://165.232.176.123/ai-study-material", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic }),
@@ -887,7 +657,6 @@ async function fetchStudyMaterial(topic) {
     return null;
   }
 }
-
 
 startBtn.addEventListener("click", () => {
   const topic = exerciseSelect.value;
@@ -902,18 +671,26 @@ startBtn.addEventListener("click", () => {
 });
 
 startQuizBtn.addEventListener("click", async () => {
+  quizLog = []; // reset quiz log on new start
+  correctAnswers = 0; // reset score!
+  wrongTopics.clear();
   const userGmail = prompt("Please enter your Gmail address to begin:");
   if (userGmail && userGmail.includes("@gmail.com")) {
     userEmail = userGmail;
     introContentDiv.style.display = "none";
     startQuizBtn.style.display = "none";
     questionArea.style.display = "block";
-    hintBtnUsed = false;
     await loadQuiz(exerciseSelect.value);
   } else {
     alert("Please enter a valid Gmail address to start.");
   }
 });
+backToSectionsBtn.addEventListener("click", () => {
+  // Hide the intro, show the start/sections page
+  introContentDiv.style.display = "none";
+  startScreen.style.display = "block";
+});
+
 
 async function loadQuiz(topic, isRemedial = false) {
   try {
@@ -922,7 +699,7 @@ async function loadQuiz(topic, isRemedial = false) {
       isSATLevel: isSATLevel,
       wrongTopics: isRemedial ? Array.from(wrongTopics) : [],
     };
-    const res = await fetch("http://localhost:5000/generate-quiz", {
+    const res = await fetch("http://165.232.176.123/generate-quiz", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -962,6 +739,9 @@ function showQuestion() {
     return;
   }
   const q = quizData[currentIndex];
+  // Initialize hintUsed as false for each new question
+  q.hintUsed = false;
+
   questionText.textContent = q.question;
   optionsDiv.innerHTML = "";
   optionsDiv.style.pointerEvents = "auto";
@@ -1069,8 +849,6 @@ function showScorePage() {
   }
 }
 
-
-
 function handleMainAnswer(selectedIdx, currentQuestion) {
   optionsDiv.style.pointerEvents = "none";
   hintBtn.style.display = "none";
@@ -1079,6 +857,7 @@ function handleMainAnswer(selectedIdx, currentQuestion) {
 
   const correctIdx = ["A", "B", "C", "D"].indexOf(currentQuestion.answer.trim()[0]);
   const isCorrect = selectedIdx === correctIdx;
+  const score = isCorrect ? 1 : 0;
 
   const feedbackContainer = document.createElement("div");
   feedbackContainer.id = "feedbackDiv";
@@ -1090,34 +869,33 @@ function handleMainAnswer(selectedIdx, currentQuestion) {
   } else {
     feedbackContainer.innerHTML = `<span style="color:red;font-weight:bold;">❌ Incorrect!</span> <span style="color:#222;">The correct answer is <strong>${currentQuestion.answer}</strong>.</span>`;
     wrongTopics.add(currentQuestion.topic || exerciseSelect.value);
-    // Mark that this question was answered incorrectly
     currentQuestion.isWrong = true;
     currentQuestion.selectedOption = currentQuestion.options[selectedIdx];
   }
+
   if (currentQuestion.rationale) {
     feedbackContainer.innerHTML += `<br><strong>Explanation:</strong> ${currentQuestion.rationale}`;
   }
   questionArea.appendChild(feedbackContainer);
 
-  // ---------- LOG QUESTION AND ANSWER SELECTION HERE -------------
-  // Store for backend logging
-  quizLog.push({
+  // Log question with proper hintUsed tracking
+  const questionLogEntry = {
     question: currentQuestion.question,
     correctAnswer: currentQuestion.answer,
-    userAnswer: currentQuestion.options[selectedIdx]
-  });
-  // ---------------------------------------------------------------
+    userAnswer: currentQuestion.options[selectedIdx],
+    isCorrect: isCorrect,
+    score: score,
+    hintUsed: currentQuestion.hintUsed ? "YES" : "NO" // Convert boolean to string here
+  };
+
+  logQuestion(userEmail, exerciseSelect.value, questionLogEntry);
 
   if (currentQuestion.followUp) {
     showFollowUpQuestion(currentQuestion.followUp, currentQuestion.rationale);
   } else {
     nextBtn.style.display = "inline-block";
   }
-  logUserQuiz(userEmail, exerciseSelect.value, correctAnswers, hintBtnUsed, quizLog);
 }
-
-
-
 
 function showFollowUpQuestion(followUp, mainRationale) {
   const oldOptions = document.getElementById("options");
@@ -1169,8 +947,11 @@ function handleFollowUpAnswer(selectedIdx, followUp) {
 }
 
 hintBtn.addEventListener("click", () => {
-  hintBtnUsed = true;
+  // Mark hint as used for the current question
   const currentQuestion = quizData[currentIndex];
+  if (currentQuestion) {
+    currentQuestion.hintUsed = true; // Set to true when hint button is clicked
+  }
   hint.textContent = currentQuestion.hint;
   hint.style.display = "block";
 });

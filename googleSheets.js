@@ -1,18 +1,23 @@
 import { google } from "googleapis";
-import path from "path";
+import dotenv from "dotenv";
 
-// If running on Node.js 18+ with "type": "module", you might need to adjust __dirname
+dotenv.config();
+
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
-const CREDENTIALS_PATH = path.join(process.cwd(), "service-account-key.json");
 
 let sheetsInstance;
 
 async function authorizeSheets() {
   if (sheetsInstance) return sheetsInstance;
+
   const auth = new google.auth.GoogleAuth({
-    keyFile: CREDENTIALS_PATH,
+    credentials: {
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    },
     scopes: SCOPES,
   });
+
   sheetsInstance = google.sheets({ version: "v4", auth });
   return sheetsInstance;
 }
