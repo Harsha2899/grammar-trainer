@@ -4,11 +4,21 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
-
 let sheetsInstance;
 
+/**
+ * Authorize Google Sheets API
+ */
 async function authorizeSheets() {
   if (sheetsInstance) return sheetsInstance;
+
+  // Check for missing env variables
+  if (!process.env.GOOGLE_CLIENT_EMAIL) {
+    throw new Error("GOOGLE_CLIENT_EMAIL is missing in .env");
+  }
+  if (!process.env.GOOGLE_PRIVATE_KEY) {
+    throw new Error("GOOGLE_PRIVATE_KEY is missing in .env");
+  }
 
   const auth = new google.auth.GoogleAuth({
     credentials: {
@@ -35,15 +45,15 @@ async function authorizeSheets() {
 export async function appendUserScore({ email, topic, score, hintUsed, qaLog }) {
   const sheets = await authorizeSheets();
 
-  // Update range to include all necessary columns
   const spreadsheetId = "11JTIY4A3EiUcCl0W41U2ezyjGkznBgcC1L1RNOt6QME"; // Your Sheet ID
   const range = "Sheet1!A:H";
 
-  // If qaLog is missing or empty, still log at least a single row
   const timestamp = new Date().toISOString();
+
+  // Ensure qaLog is an array
   const values =
     Array.isArray(qaLog) && qaLog.length > 0
-      ? qaLog.map((q) => [
+      ? qaLog.map(q => [
           timestamp,
           email,
           topic,
@@ -51,15 +61,20 @@ export async function appendUserScore({ email, topic, score, hintUsed, qaLog }) 
           hintUsed ? "YES" : "NO",
           q.question || "",
           q.correctAnswer || "",
-          q.userAnswer || "",
+          q.userAnswer || ""
         ])
       : [[timestamp, email, topic, score.toString(), hintUsed ? "YES" : "NO", "", "", ""]];
 
-  const resource = { values };
-  await sheets.spreadsheets.values.append({
-    spreadsheetId,
-    range,
-    valueInputOption: "USER_ENTERED",
-    resource,
-  });
+  try {
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range,
+      valueInputOption: "USER_ENTERED",
+      resource: { values },
+    });
+    console.log("✅ User score appended to Google Sheets");
+  } catch (err) {
+    console.error("❌ Failed to append to Google Sheets:", err.message);
+    throw err; // Let backend catch this
+  }
 }

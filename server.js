@@ -5,6 +5,7 @@ import fetch from "node-fetch";
 import path from "path";
 import { fileURLToPath } from "url";
 import { appendUserScore } from "./googleSheets.js";
+let quizLogs = [];
 
 dotenv.config();
 
@@ -216,18 +217,55 @@ app.post("/generate-quiz", async (req, res) => {
 });
 // New endpoint to log user quiz results to Google Sheets
 app.post("/log-score", async (req, res) => {
-  const { email, topic, score, hintUsed, qaLog } = req.body; // qaLog = array of {question, options, correctAnswer, userAnswer}
-  if (!email || !topic || score === undefined || !qaLog) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
   try {
-    await appendUserScore({ email, topic, score, hintUsed, qaLog });
-    res.status(200).json({ message: "User score logged successfully" });
-  } catch (error) {
-    console.error("Error logging user score:", error);
-    res.status(500).json({ error: "Failed to log user score" });
+    const { email, topic, score, hintUsed, qaLog } = req.body;
+
+    // Validate required fields
+    if (!email || !topic || score === undefined || !qaLog) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    // Sanitize qaLog and ensure hintUsed is boolean
+    const sanitizedQaLog = Array.isArray(qaLog)
+      ? qaLog.map(q => ({
+          question: q.question || "",
+          correctAnswer: q.correctAnswer || "",
+          userAnswer: q.userAnswer || "",
+          score: q.score || 0,
+          hintUsed: q.hintUsed === true
+        }))
+      : [];
+
+    // Optional: Store in memory for debugging
+    quizLogs.push({
+      email,
+      topic,
+      score,
+      hintUsed: hintUsed === true,
+      qaLog: sanitizedQaLog,
+      createdAt: new Date()
+    });
+    console.log("Current quiz logs:", quizLogs);
+
+    // ✅ Append to Google Sheets
+    await appendUserScore({
+      email,
+      topic,
+      score,
+      hintUsed: hintUsed === true,
+      qaLog: sanitizedQaLog
+    });
+
+    res.json({ status: "success", message: "Score logged successfully" });
+
+  } catch (err) {
+    console.error("Error in /log-score:", err);
+    res.status(500).json({ status: "error", message: err.message });
   }
 });
+
+
+
 
 // (other endpoints from your file)
 

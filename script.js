@@ -606,22 +606,38 @@ Błędne odpowiedzi są jak zawodnik, który udaje, że podaje, żebyś poruszy�
 `
 };
 
+// Helper: convert "YES"/"NO" to boolean
+function yesNoToBool(value) {
+  return value === "YES";
+}
+
+// Log the full quiz score
 async function logUserQuiz(email, topic, score, hintUsed, qaLog) {
   try {
     const response = await fetch("/log-score", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, topic, score, hintUsed, qaLog }),
+      body: JSON.stringify({
+        email,
+        topic,
+        score,
+        hintUsed: yesNoToBool(hintUsed),
+        qaLog: qaLog.map(q => ({
+          ...q,
+          hintUsed: yesNoToBool(q.hintUsed)
+        })),
+      }),
     });
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Error logging score");
-    console.log("User quiz score logged:", data.message);
+    console.log("✅ User quiz score logged:", data.message);
   } catch (err) {
-    console.error("Failed to log user quiz:", err);
+    console.error("❌ Failed to log user quiz:", err);
   }
 }
 
-// This is the function to log a single question at a time.
+// Log a single question at a time
 async function logQuestion(email, topic, questionEntry) {
   try {
     const response = await fetch("/log-score", {
@@ -631,10 +647,14 @@ async function logQuestion(email, topic, questionEntry) {
         email,
         topic,
         score: questionEntry.score,
-        hintUsed: questionEntry.hintUsed, // Already "YES" or "NO" string
-        qaLog: [questionEntry],
+        hintUsed: yesNoToBool(questionEntry.hintUsed),
+        qaLog: [{
+          ...questionEntry,
+          hintUsed: yesNoToBool(questionEntry.hintUsed)
+        }],
       }),
     });
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Error logging question");
     console.log("✅ Question logged:", data.message);
@@ -642,6 +662,7 @@ async function logQuestion(email, topic, questionEntry) {
     console.error("❌ Failed to log question:", err);
   }
 }
+
 
 async function fetchStudyMaterial(topic) {
   try {
